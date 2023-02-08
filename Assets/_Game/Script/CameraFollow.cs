@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Player target;
+    [SerializeField] private PlayerAction target;
     [SerializeField] private Vector3 playingModeOffset;
     [SerializeField] private Vector3 cheeringModeOffset;
     [SerializeField] private float speed;
@@ -18,7 +18,8 @@ public class CameraFollow : MonoBehaviour
     {        
         if (!target.IsCheering)
         {
-            transform.position = Vector3.Lerp(transform.position, target.transform.position + playingModeOffset, Time.fixedDeltaTime * speed);
+            Vector3 stackCountOffset = new Vector3(0, 0.2f, -0.1f) * target.PlayerStack.CollectedBrickCount;
+            transform.position = Vector3.Lerp(transform.position, target.transform.position + playingModeOffset + stackCountOffset, Time.fixedDeltaTime * speed);
         } else
         {
             Quaternion rotTarget = Quaternion.LookRotation(target.transform.position - this.transform.position);
